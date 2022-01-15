@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:09:57 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/01/14 15:15:44 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/01/15 18:29:53 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,34 +85,11 @@ void	ft_treat_bin(char c, int pid)
 	{
 		result = base & c;
 		if (result == 0b00000000)
-		{
 			kill(pid, SIGUSR1);
-			// write (1,"0",1);
-		}
 		else
-		{
 			kill(pid, SIGUSR2);	
-			// write (1,"1",1);
-		}
 		base = base << 1; 
 		i++;
 		usleep (100);
 	}
 }
-
-// int	main (int ac, char **av)
-// {
-// 	int	i;
-// 	int	c;
-
-// 	i = 0;
-// 	if (ac == 2)
-// 	{
-// 		while (av[1][i])
-// 		{
-// 			ft_treat_bin(av[1][i], 1);
-// 			i++;
-// 		}
-// 	}
-// 	return (1);
-// }

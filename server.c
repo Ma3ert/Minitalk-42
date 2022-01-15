@@ -14,12 +14,16 @@
 
 int		i = 7;
 
-void	sigusr_handler(int sig)
+void	sigusr_handler(int sig, siginfo_t *siginfo, void *context)
 {
 	static char	str[8];
-	int		j = 0;
+	int		j;
 	char	c;
+	int check; 
 
+	j = 0;
+	check = 0;
+	context = NULL;
 	if (sig == SIGUSR1 && i >= 0)
 	{
 		str[i] = '0';
@@ -27,6 +31,8 @@ void	sigusr_handler(int sig)
 		{
 			c = ft_atoi_bin(str);
 			write(1, &c, 1);
+			if (c == 0)
+				check = 1;
 			i = 8;
 		}
 		i--;
@@ -37,14 +43,18 @@ void	sigusr_handler(int sig)
 		if (i == 0)
 		{
 			c = ft_atoi_bin(str);
+			if (c == 0)
+				check = 1;
 			write(1, &c, 1);
 			i = 8;
 		}
 		i--;
 	}
+	if (check == 1 && siginfo->si_pid != 0)
+		kill(siginfo->si_pid, SIGUSR1);
 }
 
-int main(int ac, char **av)
+int main(void)
 {
 	int	pid;
 	struct sigaction sa;
@@ -53,8 +63,9 @@ int main(int ac, char **av)
 	i = 0;
 	pid = getpid();
 	printf("%d\n", pid);
-	sa.sa_handler = &sigusr_handler ;
-	sa.sa_flags = SA_NODEFER ;
+	sa.sa_sigaction = &sigusr_handler;
+	//sa.sa_flags = SA_NODEFER;
+	sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR2, &sa, NULL);
 	sigaction(SIGUSR1, &sa, NULL);
 	while (1)
