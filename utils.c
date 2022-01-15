@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:09:57 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/01/15 18:29:53 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/01/15 21:11:56 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ void	ft_treat_bin(char c, int pid)
 
 	i = 0;
 	base = 0b00000001;
-	while(i < 8)
+	while (i < 8)
 	{
 		result = base & c;
 		if (result == 0b00000000)
 			kill(pid, SIGUSR1);
 		else
-			kill(pid, SIGUSR2);	
-		base = base << 1; 
+			kill(pid, SIGUSR2);
+		base = base << 1;
 		i++;
 		usleep (100);
 	}

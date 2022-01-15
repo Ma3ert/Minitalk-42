@@ -6,7 +6,7 @@
 #    By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/15 18:45:43 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/01/15 18:45:50 by yait-iaz         ###   ########.fr        #
+#    Updated: 2022/01/15 21:03:23 by yait-iaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,9 +36,9 @@ bonus : all
 	$(CC) $(FLAGS) -c $<
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS_C) $(OBJS_S)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(SERVER) $(CLIENT)
 
 re: fclean all
