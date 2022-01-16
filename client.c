@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:53:40 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/01/15 21:04:48 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/01/16 13:32:29 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_feedback(int sig)
 {
 	if (sig == SIGUSR1)
 	{
-		usleep(800);
+		usleep(600);
 		write(1, "the server receive the message", 30);
 	}
 }
