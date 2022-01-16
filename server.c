@@ -6,13 +6,13 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:12:40 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/01/15 21:16:28 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/01/16 20:13:38 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int	g_i = 7;
+int	g_pid1;
 
 void	ft_putchar(char c)
 {
@@ -40,31 +40,50 @@ void	ft_putnbr(int n)
 	}
 }
 
+void	*ft_memset(void *b, size_t len)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = (char *)b;
+	while (len > 0)
+	{
+		str[i] = '\0';
+		len--;
+		i++;
+	}
+	b = (void *)str;
+	return (b);
+}
+
 void	sigusr_handler(int sig, siginfo_t *siginfo, void *context)
 {
 	static char	str[8];
-	int			j;
+	static int	i;
 	char		c;
 	int			check;
 
-	j = 0;
+	if (g_pid1 != siginfo->si_pid)
+		i = 7;
 	check = 0;
 	context = NULL;
-	if (sig == SIGUSR1 && g_i >= 0)
-		str[g_i] = '0';
-	else if (sig == SIGUSR2 && g_i >= 0)
-		str[g_i] = '1';
-	if (g_i == 0)
+	if (sig == SIGUSR1 && i >= 0)
+		str[i] = '0';
+	else if (sig == SIGUSR2 && i >= 0)
+		str[i] = '1';
+	if (i == 0)
 	{
 		c = ft_atoi_bin(str);
 		write(1, &c, 1);
 		if (c == 0)
 			check = 1;
-		g_i = 8;
+		i = 8;
 	}
-	g_i--;
+	i--;
 	if (check == 1 && siginfo->si_pid != 0)
 		kill(siginfo->si_pid, SIGUSR1);
+	g_pid1 = siginfo->si_pid;
 }
 
 int	main(void)
