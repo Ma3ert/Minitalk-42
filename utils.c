@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:09:57 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/01/16 19:16:05 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/01/17 15:44:25 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ void	ft_treat_bin(char c, int pid)
 			kill(pid, SIGUSR2);
 		base = base << 1;
 		i++;
-		usleep (200);
+		usleep (800);
 	}
 }

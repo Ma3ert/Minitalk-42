@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 15:12:40 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/01/17 17:32:44 by yait-iaz         ###   ########.fr       */
+/*   Created: 2022/01/17 17:52:34 by yait-iaz          #+#    #+#             */
+/*   Updated: 2022/01/17 17:54:43 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@ void	sigusr_handler(int sig, siginfo_t *siginfo, void *context)
 	static char	str[8];
 	static int	i;
 	char		c;
+	int			check;
 
 	if (g_pid1 != siginfo->si_pid)
-	{
-		g_pid1 = siginfo->si_pid;
 		i = 7;
-	}
+	check = 0;
 	context = NULL;
 	if (sig == SIGUSR1 && i >= 0)
 		str[i] = '0';
@@ -60,9 +59,14 @@ void	sigusr_handler(int sig, siginfo_t *siginfo, void *context)
 	{
 		c = ft_atoi_bin(str);
 		write(1, &c, 1);
+		if (c == 0)
+			check = 1;
 		i = 8;
 	}
 	i--;
+	if (check == 1 && siginfo->si_pid != 0)
+		kill(siginfo->si_pid, SIGUSR1);
+	g_pid1 = siginfo->si_pid;
 }
 
 int	main(void)
